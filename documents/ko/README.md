@@ -4,6 +4,8 @@ HTML to Anything는 로컬 `.html` 또는 `.htm` 파일을 PDF, PNG, Markdown, J
 
 [최신 DMG 다운로드](https://github.com/eidenchoe-appstore/html-to-anything/releases/latest/download/HTMLToAnything.dmg)
 
+![HTML to Anything 앱 미리보기](../../assets/app-preview.png)
+
 ## 주요 기능
 
 | 형식 | 결과물 | 에셋 처리 |
@@ -15,11 +17,24 @@ HTML to Anything는 로컬 `.html` 또는 `.htm` 파일을 PDF, PNG, Markdown, J
 
 ## 사용 방법
 
-1. HTML 파일을 앱에 드래그하거나 **파일 선택**을 누릅니다.
-2. PDF, PNG, Markdown, JSP 중 저장 형식을 선택합니다.
-3. 기본 저장 폴더를 그대로 쓰거나 다른 폴더를 선택합니다.
-4. **변환**을 누릅니다.
-5. 변환 완료 후 Finder에서 결과 파일을 확인합니다.
+1. **HTML to Anything** 앱을 엽니다.
+2. `.html` 또는 `.htm` 파일을 드롭 영역에 끌어다 놓거나 **파일 선택**을 눌러 직접 선택합니다.
+3. 오른쪽 패널에서 저장 형식을 선택합니다.
+4. 기본 저장 위치를 그대로 쓰거나 **폴더 선택**으로 다른 폴더를 지정합니다.
+5. **변환**을 누릅니다.
+6. 변환 완료 후 **Finder에서 보기**로 결과 파일을 바로 확인합니다.
+
+## 출력 방식
+
+앱은 기존 결과 파일을 덮어쓰지 않습니다. 같은 이름의 파일이 이미 있으면 다음처럼 번호를 붙여 저장합니다.
+
+```text
+report.pdf
+report-1.pdf
+report-2.pdf
+```
+
+Markdown과 JSP는 HTML에서 참조한 로컬 에셋을 결과 파일 옆의 에셋 폴더로 복사합니다. 따라서 이미지, CSS, 폰트 파일을 따로 직접 복사하지 않아도 변환 결과와 함께 보관할 수 있습니다.
 
 ## 에셋 포함 HTML 처리
 

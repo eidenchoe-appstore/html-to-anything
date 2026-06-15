@@ -26,6 +26,10 @@
   <img alt="Platform" src="https://img.shields.io/badge/platform-macOS%2014%2B-lightgrey?style=flat-square">
 </p>
 
+<p align="center">
+  <img src="assets/app-preview.png" alt="HTML to Anything app preview" width="900">
+</p>
+
 ## Overview
 
 HTML to Anything is built for the simple workflow: drop one `.html` or `.htm` file, choose an output format, and save the result. It uses macOS WebKit for visual rendering, so local CSS, images, fonts, and other relative assets can be reflected in PDF and PNG exports.
@@ -49,11 +53,28 @@ After opening the DMG, drag **HTML to Anything** into **Applications**.
 
 ## Usage
 
-1. Drag a local HTML file into the app, or click **Select File**.
-2. Choose **PDF**, **PNG**, **Markdown**, or **JSP**.
-3. Keep the default destination folder or choose another folder.
-4. Click **Convert**.
-5. Open the result from Finder.
+1. Open **HTML to Anything**.
+2. Drag a `.html` or `.htm` file into the drop area, or click **파일 선택** to choose a file manually.
+3. Select the output format in the right panel:
+   - **PDF** for a rendered document.
+   - **PNG** for a rendered image snapshot.
+   - **Markdown** for editable plain text.
+   - **JSP** for an HTML-based JSP file.
+4. Choose the destination folder with **폴더 선택**, or keep the default folder next to the input HTML file.
+5. Click **변환**.
+6. When conversion finishes, use **Finder에서 보기** to jump directly to the saved file.
+
+## Output Behavior
+
+The app never overwrites an existing output file. If a file with the same name already exists, it creates a numbered filename such as:
+
+```text
+report.pdf
+report-1.pdf
+report-2.pdf
+```
+
+For Markdown and JSP exports, local assets referenced by the HTML are copied into a sibling asset folder. This keeps the converted output portable without requiring you to manually copy image, CSS, or font folders.
 
 ## Asset-Aware Conversion
 
