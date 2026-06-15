@@ -32,9 +32,11 @@ public enum HTMLConversionError: LocalizedError, Equatable, Sendable {
 @MainActor
 public final class HTMLConversionService {
     private let fileManager: FileManager
+    private let assetBundler: HTMLAssetBundler
 
     public init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
+        assetBundler = HTMLAssetBundler(fileManager: fileManager)
     }
 
     public func convert(
@@ -53,12 +55,25 @@ public final class HTMLConversionService {
 
         switch format {
         case .jsp:
-            try fileManager.copyItem(at: inputURL, to: outputURL)
+            let html = try readHTMLText(from: inputURL)
+            let result = try assetBundler.rewriteHTMLWithBundledAssets(
+                html,
+                inputURL: inputURL,
+                outputURL: outputURL
+            )
+            try result.text.write(to: outputURL, atomically: true, encoding: .utf8)
         case .markdown:
             let renderer = HTMLRenderer()
             try await renderer.load(fileURL: inputURL)
+            let html = try readHTMLText(from: inputURL)
             let markdown = try await renderer.makeMarkdown()
-            try markdown.write(to: outputURL, atomically: true, encoding: .utf8)
+            let result = try assetBundler.rewriteMarkdownWithBundledAssets(
+                markdown,
+                sourceHTML: html,
+                inputURL: inputURL,
+                outputURL: outputURL
+            )
+            try result.text.write(to: outputURL, atomically: true, encoding: .utf8)
         case .pdf:
             let renderer = HTMLRenderer()
             try await renderer.load(fileURL: inputURL)
@@ -72,6 +87,20 @@ public final class HTMLConversionService {
         }
 
         return outputURL
+    }
+
+    private func readHTMLText(from inputURL: URL) throws -> String {
+        let data = try Data(contentsOf: inputURL)
+
+        if let utf8 = String(data: data, encoding: .utf8) {
+            return utf8
+        }
+
+        if let latin1 = String(data: data, encoding: .isoLatin1) {
+            return latin1
+        }
+
+        return String(decoding: data, as: UTF8.self)
     }
 
     private func validateInput(_ inputURL: URL) throws {
